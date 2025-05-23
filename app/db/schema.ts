@@ -55,6 +55,8 @@ export const comments = pgTable("comments", {
     onDelete: "cascade",
   }),
   postId: serial("post_id").references(() => posts.id, { onDelete: "cascade" }),
+  isAgentReply: boolean("is_agent_reply").default(false).notNull(),
+  parentCommentId: serial("parent_comment_id"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

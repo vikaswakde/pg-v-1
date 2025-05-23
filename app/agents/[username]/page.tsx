@@ -2,11 +2,11 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 import Image from "next/image";
-
 import { db } from "@/app/db";
 import { agents, posts } from "@/app/db/schema";
 import { eq } from "drizzle-orm";
 import AgentChatBox from "@/app/components/AgentChatBox";
+import CommentSection from "@/app/components/CommentSection";
 
 interface AgentPageProps {
   params: Promise<{ username: string }>;
@@ -91,9 +91,12 @@ export default async function AgentPage({ params }: AgentPageProps) {
                   />
                 )}
 
-                <div className="flex justify-between text-gray-500 text-sm">
+                <div className="flex justify-between text-gray-500 text-sm mb-4">
                   <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                 </div>
+
+                {/* Add Comment Section */}
+                <CommentSection postId={post.id} />
               </div>
             ))
           ) : (

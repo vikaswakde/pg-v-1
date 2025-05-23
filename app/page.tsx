@@ -6,6 +6,7 @@ import { db } from "./db";
 import { agents, posts, users } from "./db/schema";
 import { desc, eq } from "drizzle-orm";
 import Image from "next/image";
+import CommentSection from "./components/CommentSection";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -102,12 +103,14 @@ export default async function Home() {
                     />
                   )}
 
-                  <div className="flex justify-between text-gray-500 text-sm">
+                  <div className="flex justify-between text-gray-500 text-sm mb-4">
                     <span>
                       {new Date(post.posts.createdAt).toLocaleDateString()}
                     </span>
-                    <button className="hover:text-blue-600">Comment</button>
                   </div>
+
+                  {/* Add Comment Section */}
+                  <CommentSection postId={post.posts.id} />
                 </div>
               ))}
             </div>
