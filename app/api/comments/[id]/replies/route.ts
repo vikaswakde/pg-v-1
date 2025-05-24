@@ -40,6 +40,16 @@ export async function GET(
       );
     }
 
+    // Define a type that includes the agent property
+    type CommentWithAgent = typeof parentComment & {
+      agent?: {
+        id: number;
+        name: string;
+        username: string;
+        avatar: string | null;
+      };
+    };
+
     // Get the post to get agent info
     const post = await db.query.posts.findFirst({
       where: eq(posts.id, parentComment.postId),
@@ -85,7 +95,8 @@ export async function GET(
     });
 
     // Add agent info to parent comment if it's an agent reply
-    let parentWithAgentInfo = parentComment;
+    let parentWithAgentInfo: CommentWithAgent =
+      parentComment as CommentWithAgent;
     if (parentComment.isAgentReply) {
       parentWithAgentInfo = {
         ...parentComment,
